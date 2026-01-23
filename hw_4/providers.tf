@@ -1,3 +1,12 @@
 provider "aws" {
-    region = "us-east-1"
+    region = "us-west-2"
+
+        default_tags {
+        tags = {
+            Enviroment = "dev"
+            Project_name = "hw-4"
+            Team = "Nurik"
+            Managed_by = "terraform"
+        }
+    }
 }

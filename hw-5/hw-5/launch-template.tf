@@ -13,7 +13,7 @@ resource "aws_launch_template" "launch-template" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = "${var.ec2}-"
+      Name = "${var.ec2}-${count.index + 1}"
     }
   }
 }
@@ -38,4 +38,6 @@ data "aws_ami" "amazon_linux_2023" {
   }
 
 }
+
+
 

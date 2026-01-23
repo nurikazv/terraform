@@ -26,12 +26,5 @@ variable "ec2"{
 variable "domain_name" {
   type = string
   description = "Variable for DNS name"
-  default = "zizu-aws.com"
+  default = "aws-zizu.com"
 }
-
-variable "instance_type" {
-    description = "aws ec2 instance type"
-    type = string 
-    default = "t2.micro"
-}
-

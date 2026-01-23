@@ -18,25 +18,20 @@ variable "az_set" {
 }
 
 
-variable "pub" {
-  type        = string
-  description = "Public tag"
-  default     = "public"
+//tags for public subnets
+variable "public_tags" {
+    type = string
+    description = "Common tags"
+    default =  "public"
+    
 }
 
-variable "priv" {
-  type        = string
-  description = "Private tag"
-  default     = "private"
+
+//tags for private subnets
+
+variable "private_tags" {
+    type = string
+    description = "Common tags"
+    default =  "private"
 }
 
-variable "rt" {
-  type        = string
-  description = "Tag for public and private route tables"
-  default     = "rt"
-}
-
-locals {
-  pub_rt  = "${var.pub}-${var.rt}"
-  priv_rt = "${var.priv}-${var.rt}"
-}

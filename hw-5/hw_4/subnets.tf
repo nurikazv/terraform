@@ -10,7 +10,7 @@ resource "aws_subnet" "public_subnet" {
 #   assign_ipv6_address_on_creation = true
 
   tags = {
-    Name = "${var.pub}-subnet-${count.index + 1}"
+    Name = "${var.public_tags}-subnet-${count.index + 1}"
     }
   
 }
@@ -31,9 +31,9 @@ resource "aws_subnet" "private_subnet" {
   
 
 
-  # assign_ipv6_address_on_creation = true
+  assign_ipv6_address_on_creation = true
 
   tags = {
-    Name = "${var.priv}-subnet-${count.index + 1}"
+    Name = "${var.private_tags}-subnet-${count.index + 1}"
   }
 }

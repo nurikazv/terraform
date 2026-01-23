@@ -12,7 +12,5 @@ resource "aws_autoscaling_group" "app_asg" {
     version = "$Latest"
   }
 
-  target_group_arns = [
-    aws_lb_target_group.alb-tg.arn
-    ]  
+  target_group_arns = [aws_lb_target_group.alb-tg.arn]  
 }

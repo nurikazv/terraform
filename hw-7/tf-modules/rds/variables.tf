@@ -60,3 +60,12 @@ variable "tags"  {
 
 
 
+variable "master_key" {
+  type = bool
+  default = true
+}
+
+variable "master_key_id" {
+  type = string
+  default = ""
+}

@@ -11,8 +11,8 @@ module "instance-ec2" {
   associate_public_ip = true
 
   tags = {
-    name        = "wordpress-ec2"
-    env  = "dev"
+    Name        = "wordpress-ec2"
+    Environment  = "dev"
   }
 }
 
@@ -66,9 +66,10 @@ module "rds-db" {
   master_user_secret_kms_key_id = aws_kms_key.mykey.id
   storage_encrypted             = true
   skip_final_snapshot           = true
+  vpc_security_group_ids = module.security-group-wp.id
 
 
-  tags {
+  tags = {
     Name        = "DB-Wordpress"
     Environment = "dev"
   }
@@ -83,7 +84,7 @@ module "subnet-group-main" {
 
   mysql_cidrs = [aws_vpc.wp.cidr_block]
 
-  tags {
+  tags = {
     Name        = "RDS Subnet Group"
     Environment = "dev"
   }

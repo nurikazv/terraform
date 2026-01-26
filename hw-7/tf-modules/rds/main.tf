@@ -6,7 +6,7 @@ resource "aws_db_instance" "main" {
   allocated_storage    = var.allocated_storage
 
   db_name              = var.db_name
-  identifier           = var.ident
+  # identifier           = var.ident
   username             = var.username
   password             = var.password
 

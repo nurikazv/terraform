@@ -1,7 +1,7 @@
 module "instance-ec2" {
   source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/ec2"
 
-  instace_type           = "t3.micro"
+  instance_type           = "t3.micro"
   security_group_id      = module.security-group-wp.id
   subnet_id              = aws_subnet.public_subnet.id
   vpc_security_group_ids = module.security-group-wp.id
@@ -10,9 +10,9 @@ module "instance-ec2" {
   key_name            = "MyMacKey"
   associate_public_ip = true
 
-  tags {
-    Name        = "wordpress-ec2"
-    Environment = "dev"
+  tags = {
+    name        = "wordpress-ec2"
+    env  = "dev"
   }
 }
 

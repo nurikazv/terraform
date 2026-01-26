@@ -38,9 +38,9 @@ module "security-group-wp" {
     Environment = "dev"
   }
 
-  http_cidrs  = ["0.0.0.0/0"]
-  ssh_cidrs   = ["0.0.0.0/0"]
-  mysql_cidrs = []
+  http_cidr_blocks  = ["0.0.0.0/0"]
+  ssh_cidr_blocks   = ["0.0.0.0/0"]
+  mysql_cidr_blocks = []
 }
 
 

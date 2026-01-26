@@ -47,13 +47,11 @@ module "security-group-wp" {
 module "rds-db" {
   source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/rds"
 
-  db_name    = "Wordpress-DB"
-  identifier = "Wordpress"
-
+  identifier        = "wordpress"
+  db_name           = "Wordpress-DB"
   instance_class    = "db.t3.micro"
   allocated_storage = 20
   port              = 3306
-
 
   username = "admin"
   password = var.password
@@ -63,10 +61,9 @@ module "rds-db" {
     aws_subnet.private_subnet_rds_2.id
   ]
 
+  vpc_security_group_ids = [module.security-group-wp.id]
   master_key             = true
   master_key_id          = aws_kms_key.mykey.id
-  vpc_security_group_ids = [module.security-group-wp.id]
-
 
   tags = {
     Name        = "DB-Wordpress"
@@ -74,18 +71,4 @@ module "rds-db" {
   }
 }
 
-module "subnet-group-main" {
-  source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/rds"
-
-  name        = "${var.identifier}-subnet-group-wp"
-  description = "Subnet group for Wordpress-DB"
-  vpc_id      = "vpc-0d7629afe601c6098"
-
-  mysql_cidrs = [aws_vpc.wp.cidr_block]
-
-  tags = {
-    Name        = "RDS Subnet Group"
-    Environment = "dev"
-  }
-}
 

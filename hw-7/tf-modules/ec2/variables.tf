@@ -8,6 +8,11 @@ variable "env" {
   default = ""
 }
 
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
+
 
 
 variable "instance_type" {

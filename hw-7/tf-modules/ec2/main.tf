@@ -8,8 +8,5 @@ resource "aws_instance" "main" {
   key_name               = var.key_name
   associate_public_ip_address = var.associate_public_ip
 
-  tags = {
-    Name        = var.name
-    Environment = var.env
-  }
+  tags = var.tags
 }

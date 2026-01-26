@@ -2,7 +2,6 @@ module "instance-ec2" {
   source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/ec2"
 
   instance_type           = "t3.micro"
-  security_group_id      = module.security-group-wp.id
   subnet_id              = aws_subnet.public_subnet.id
   vpc_security_group_ids = module.security-group-wp.id
   user_data              = file("./userdata.sh")

@@ -3,17 +3,17 @@ module "instance-ec2" {
 
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet.id
-  vpc_security_group_ids = module.security-group-wp.id
+  vpc_security_group_ids = [module.security-group-wp.id] # must be a list
   user_data              = file("./userdata.sh")
-  # filebase64("${path.module}/user_data.sh")
-  key_name            = "MyMacKey"
-  associate_public_ip = true
+  key_name               = "MyMacKey"
+  associate_public_ip    = true
 
   tags = {
     Name        = "wordpress-ec2"
     Environment = "dev"
   }
 }
+
 
 output "ec2_public_ip" {
   description = "Public IP of Wordpress EC2"

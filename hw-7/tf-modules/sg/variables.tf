@@ -23,11 +23,9 @@ variable "http_cidr_blocks" {
 variable "ssh_cidr_blocks" {
     type = list(string)
     description = "CIDR blocks for ssh"
-
 }
 variable "mysql_cidrs_blocks" {
     type = list(string)
     description = "CIDR blocks for ssh"
-
 }
 

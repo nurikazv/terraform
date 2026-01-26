@@ -19,7 +19,7 @@ resource "aws_subnet" "public_subnet" {
 }
 
 resource "aws_route_table" "public" {
-  vpc_id                  = "vpc-0d7629afe601c6098"
+  vpc_id = "vpc-0d7629afe601c6098"
 
   route {
     cidr_block = "0.0.0.0/0"
@@ -44,7 +44,7 @@ resource "aws_route_table_association" "public_a" {
 
 
 resource "aws_subnet" "private_subnet_rds-1" {
-  vpc_id                  = "vpc-0d7629afe601c6098"
+  vpc_id            = "vpc-0d7629afe601c6098"
   cidr_block        = "10.0.2.0/24"
   availability_zone = "us-east-1a"
 
@@ -53,7 +53,7 @@ resource "aws_subnet" "private_subnet_rds-1" {
   }
 }
 resource "aws_subnet" "private_subnet_rds-2" {
-  vpc_id                  = "vpc-0d7629afe601c6098"
+  vpc_id            = "vpc-0d7629afe601c6098"
   cidr_block        = "10.0.3.0/24"
   availability_zone = "us-east-1b"
 

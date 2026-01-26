@@ -1,19 +1,19 @@
 module "instance-ec2" {
-    source = "git::"
+  source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/ec2"
 
-    instace_type = "t3.micro"
-    security_group_id = module.security-group-wp.id
-    subnet_id = aws_subnet.public_subnet.id
-    vpc_security_group_ids = module.security-group-wp.id
-    user_data = file("./userdata.sh")
-    # filebase64("${path.module}/user_data.sh")
-    key_name = 
-    associate_public_ip = true
+  instace_type           = "t3.micro"
+  security_group_id      = module.security-group-wp.id
+  subnet_id              = aws_subnet.public_subnet.id
+  vpc_security_group_ids = module.security-group-wp.id
+  user_data              = file("./userdata.sh")
+  # filebase64("${path.module}/user_data.sh")
+  key_name            = "MyMacKey"
+  associate_public_ip = true
 
-    tags {
-        Name = "wordpress-ec2"
-        Environment = "dev"
-    }
+  tags {
+    Name        = "wordpress-ec2"
+    Environment = "dev"
+  }
 }
 
 output "ec2_public_ip" {
@@ -21,64 +21,70 @@ output "ec2_public_ip" {
   value       = module.ec2.public_ip
 }
 
-
-
-
-# output "rds_endpoint" {
-#   description = "RDS endpoint"
-#   value       = module.rds.endpoint
-# }
+output "rds_endpoint" {
+  description = "Endpoint of RDS MySql instance"
+  value       = module.rds-db.endpoint
+}
 
 module "security-group-wp" {
-    source = "git::"
+  source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/sg"
 
-    name = "Security Group"
-    description = "Security group of EC2"
-    vpc_id = "vpc-0d7629afe601c6098"
+  name        = "Security Group"
+  description = "Security group of EC2"
+  vpc_id      = "vpc-0d7629afe601c6098"
 
-    tags = {
-        Name = "Security Group"
-        Environment = "dev"
-    }
+  tags = {
+    Name        = "Security Group"
+    Environment = "dev"
+  }
 
-    http_cidrs  = ["0.0.0.0/0"]
-    ssh_cidrs   = ["0.0.0.0/0"]
-    mysql_cidrs = []
+  http_cidrs  = ["0.0.0.0/0"]
+  ssh_cidrs   = ["0.0.0.0/0"]
+  mysql_cidrs = []
 }
 
 
 
 module "rds-db" {
-    source = "git::"
+  source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/rds"
 
-    db_name              = "Wordpress-DB"
-    identifier           = "Wordpress"
+  db_name    = "Wordpress-DB"
+  identifier = "Wordpress"
 
-    instance_class       = "db.t3.micro"
-    allocated_storage    = "20"
-    port                 = "3306"
+  instance_class    = "db.t3.micro"
+  allocated_storage = "20"
+  port              = "3306"
 
 
-    username             = var.username
-    password             = var.password
+  username = "admin"
+  password = var.password
 
-    tags {
-        Name = "DB-Wordpress"
-        Environment = "dev"
-    }
+  subnet_ids = [aws_subnet.private_subnet_rds-1.id, aws_subnet.private_subnet_rds-2.id]
+
+
+  manage_master_user_password   = true
+  master_user_secret_kms_key_id = aws_kms_key.mykey.id
+  storage_encrypted             = true
+  skip_final_snapshot           = true
+
+
+  tags {
+    Name        = "DB-Wordpress"
+    Environment = "dev"
+  }
 }
 
 module "subnet-group-main" {
-    source = "git::"
+  source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/rds"
 
-    name = "subnet-group-wp"
-    description = "Subnet group for Wordpress-DB"
-    vpc_id = "vpc-0d7629afe601c6098"
+  name        = "subnet-group-wp"
+  description = "Subnet group for Wordpress-DB"
+  vpc_id      = "vpc-0d7629afe601c6098"
 
-    mysql_cidrs = [aws_vpc.wp.cidr_block]
+  mysql_cidrs = [aws_vpc.wp.cidr_block]
 
-    tags {
-        Name = "RDS Subnet Group"
-        Environment = "dev"
-    }
+  tags {
+    Name        = "RDS Subnet Group"
+    Environment = "dev"
+  }
 }

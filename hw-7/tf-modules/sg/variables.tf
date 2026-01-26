@@ -19,7 +19,6 @@ variable "tags" {
 variable "http_cidr_blocks" {
     type = list(string)
     description = "CIDR blocks for http"
-    default 
 }
 variable "ssh_cidr_blocks" {
     type = list(string)

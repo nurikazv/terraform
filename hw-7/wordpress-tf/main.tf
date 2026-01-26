@@ -1,7 +1,7 @@
 module "instance-ec2" {
   source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/ec2"
 
-  instance_type           = "t3.micro"
+  instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet.id
   vpc_security_group_ids = module.security-group-wp.id
   user_data              = file("./userdata.sh")
@@ -11,7 +11,7 @@ module "instance-ec2" {
 
   tags = {
     Name        = "wordpress-ec2"
-    Environment  = "dev"
+    Environment = "dev"
   }
 }
 
@@ -51,21 +51,21 @@ module "rds-db" {
   identifier = "Wordpress"
 
   instance_class    = "db.t3.micro"
-  allocated_storage = "20"
-  port              = "3306"
+  allocated_storage = 20
+  port              = 3306
 
 
   username = "admin"
   password = var.password
 
-  subnet_ids = [aws_subnet.private_subnet_rds-1.id, aws_subnet.private_subnet_rds-2.id]
+  subnet_ids = [
+    aws_subnet.private_subnet_rds_1.id,
+    aws_subnet.private_subnet_rds_2.id
+  ]
 
-
-  manage_master_user_password   = true
-  master_user_secret_kms_key_id = aws_kms_key.mykey.id
-  storage_encrypted             = true
-  skip_final_snapshot           = true
-  vpc_security_group_ids = module.security-group-wp.id
+  master_key             = true
+  master_key_id          = aws_kms_key.mykey.id
+  vpc_security_group_ids = [module.security-group-wp.id]
 
 
   tags = {
@@ -77,7 +77,7 @@ module "rds-db" {
 module "subnet-group-main" {
   source = "git::ssh://git@github.com/nurikazv/terraform.git//hw-7/tf-modules/rds"
 
-  name        = "subnet-group-wp"
+  name        = "${var.identifier}-subnet-group-wp"
   description = "Subnet group for Wordpress-DB"
   vpc_id      = "vpc-0d7629afe601c6098"
 
@@ -88,3 +88,4 @@ module "subnet-group-main" {
     Environment = "dev"
   }
 }
+

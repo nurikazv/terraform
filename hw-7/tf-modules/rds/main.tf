@@ -6,7 +6,7 @@ resource "aws_db_instance" "main" {
   allocated_storage    = var.allocated_storage
 
   db_name              = var.db_name
-  identifier           = var.ident
+  identifier           = var.identifier
   username             = var.username
   password             = var.password
 
@@ -18,6 +18,7 @@ resource "aws_db_instance" "main" {
   manage_master_user_password   = var.master_key
   master_user_secret_kms_key_id = var.master_key_id
   storage_encrypted             = true
+  
 
 
   tags = {

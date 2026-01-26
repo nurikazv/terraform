@@ -4,7 +4,7 @@ variable "db_name" {
   description = "Initial Data Base name"
 }
 
-variable "identifier" {
+variable "ident" {
   type        = string
   description = "RDS instance identifier"
 }

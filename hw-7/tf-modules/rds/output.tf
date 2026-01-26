@@ -1,9 +1,11 @@
-output "endpoint" {
-  value = aws_db_instance.main.endpoint
-  description = "DNS address of the RDS instance"
+output "rds_instance_id" {
+  value = aws_db_instance.main.id
 }
 
-output "port" {
-  value = aws_db_instance.main.port
-  description = "Port of the RDS instance"
+output "rds_endpoint" {
+  value = aws_db_instance.main.endpoint
+}
+
+output "subnet_group_name" {
+  value = aws_db_subnet_group.main.name
 }
